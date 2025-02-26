@@ -23,7 +23,7 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 export function DataProvider({ children }: { children: ReactNode }) {
   const [localData, setLocalData] = useState<DataItem[]>([]);
 
-  const { isLoading, error } = useQuery<DataItem[], Error>({
+  const { isLoading, error = undefined } = useQuery<DataItem[], Error>({
     queryKey: ["data"],
     queryFn: async () => {
       try {
@@ -60,10 +60,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
     },
   });
 
-  const value = {
+  const value: DataContextType = {
     data: localData,
     isLoading,
-    error,
+    error: error || undefined,
     addItem: addMutation.mutateAsync,
     updateItem: updateMutation.mutateAsync,
     deleteItem: deleteMutation.mutateAsync,

@@ -71,7 +71,7 @@ export default function Users() {
   }, [modalData]);
 
   const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
+    _event: React.ChangeEvent<unknown>,
     value: number
   ) => {
     setPage(value);
@@ -105,7 +105,7 @@ export default function Users() {
 
       await updateItem({ ...selectedRow, ...formData });
       setIsDialogOpen(false);
-      setSelectedRow(null);
+      setSelectedRow(undefined);
       setFormData({ name: "", email: "", phone: "" });
       setErrors([]);
     }
@@ -124,8 +124,8 @@ export default function Users() {
   };
 
   const handleMenuClose = () => {
-    setAnchorEl(null);
-    setSelectedId(null);
+    setAnchorEl(undefined);
+    setSelectedId(undefined);
   };
 
   const columns: GridColDef[] = [
@@ -204,7 +204,7 @@ export default function Users() {
             variant="contained"
             startIcon={<AddIcon />}
             onClick={() => {
-              setSelectedRow(null);
+              setSelectedRow(undefined);
               setFormData({ name: "", email: "", phone: "" });
               setIsDialogOpen(true);
             }}
@@ -305,7 +305,11 @@ export default function Users() {
               <ActionButton
                 variant="outlined"
                 fullWidth
-                onClick={() => setIsDialogOpen(false)}
+                onClick={() => {
+                  setSelectedRow(undefined);
+                  setFormData({ name: "", email: "", phone: "" });
+                  setIsDialogOpen(true);
+                }}
               >
                 İptal
               </ActionButton>

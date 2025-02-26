@@ -24,7 +24,7 @@ const UsersContext = createContext<UsersContextType | undefined>(undefined);
 export function UsersProvider({ children }: { children: ReactNode }) {
   const [localData, setLocalData] = useState<UserItem[]>([]);
 
-  const { isLoading, error } = useQuery<UserItem[], Error>({
+  const { isLoading, error = undefined } = useQuery<UserItem[], Error>({
     queryKey: ["users"],
     queryFn: async () => {
       try {

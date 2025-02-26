@@ -24,7 +24,7 @@ const UsersContext = createContext<UsersContextType | undefined>(undefined);
 export function UsersProvider({ children }: { children: ReactNode }) {
   const [localData, setLocalData] = useState<UserItem[]>([]);
 
-  const { isLoading, error = undefined } = useQuery<UserItem[], Error>({
+  const { isLoading, error } = useQuery<UserItem[], Error, Error>({
     queryKey: ["users"],
     queryFn: async () => {
       try {
@@ -61,10 +61,10 @@ export function UsersProvider({ children }: { children: ReactNode }) {
     },
   });
 
-  const value = {
+  const value: UsersContextType = {
     data: localData,
     isLoading,
-    error,
+    error: error || undefined,
     addItem: addMutation.mutateAsync,
     updateItem: updateMutation.mutateAsync,
     deleteItem: deleteMutation.mutateAsync,

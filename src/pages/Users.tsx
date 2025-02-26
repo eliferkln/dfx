@@ -234,8 +234,13 @@ export default function Users() {
           />
         </PaginationContainer>
 
-        <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-          <DialogContent>
+        <Dialog
+          open={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogContent sx={{ minWidth: { sm: "400px" } }}>
             <Box
               sx={{
                 display: "flex",
@@ -244,7 +249,15 @@ export default function Users() {
                 mb: 2,
               }}
             >
-              <Typography variant="h6">
+              <Typography
+                variant="h6"
+                sx={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "60%",
+                }}
+              >
                 {selectedRow ? "Kullanıcı Güncelle" : "Yeni Kullanıcı Ekle"}
               </Typography>
               <IconButton onClick={() => setIsDialogOpen(false)} size="small">

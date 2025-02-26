@@ -221,8 +221,13 @@ export default function Dashboard() {
           />
         </PaginationContainer>
 
-        <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-          <DialogContent>
+        <Dialog
+          open={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogContent sx={{ minWidth: { sm: "400px" } }}>
             <Box
               sx={{
                 display: "flex",
@@ -231,7 +236,15 @@ export default function Dashboard() {
                 mb: 2,
               }}
             >
-              <Typography variant="h6">
+              <Typography
+                variant="h6"
+                sx={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "60%",
+                }}
+              >
                 {selectedRow ? "Mesaj Güncelle" : "Yeni Mesaj Tanımla"}
               </Typography>
               <IconButton onClick={() => setIsDialogOpen(false)} size="small">

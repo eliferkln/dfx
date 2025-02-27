@@ -10,14 +10,13 @@ import {
   MenuItem,
   Divider,
 } from "@mui/material";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const location = useLocation();
   const { user, logout } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -31,40 +30,39 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
     handleClose();
-  };
-
-  const isActive = (path: string) => {
-    return location.pathname === path;
   };
 
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography
+          variant="h6"
+          sx={{ flexGrow: 1, fontSize: { xs: "0.9rem", sm: "1.25rem" } }}
+        >
           Hazır Mesaj & Kullanıcı Yönetimi
         </Typography>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: { xs: 1, sm: 2 },
+            "& .MuiButton-root": {
+              display: { xs: "none", sm: "flex" },
+            },
+          }}
+        >
           <Button
             color="inherit"
             onClick={() => navigate("/dashboard")}
-            sx={{
-              backgroundColor: isActive("/dashboard")
-                ? "rgba(255, 255, 255, 0.12)"
-                : "transparent",
-            }}
+            sx={{ minWidth: { sm: "auto" } }}
           >
-            Hazır Mesajlar
+            Mesajlar
           </Button>
           <Button
             color="inherit"
             onClick={() => navigate("/users")}
-            sx={{
-              backgroundColor: isActive("/users")
-                ? "rgba(255, 255, 255, 0.12)"
-                : "transparent",
-            }}
+            sx={{ minWidth: { sm: "auto" } }}
           >
             Kullanıcılar
           </Button>
@@ -86,6 +84,25 @@ export default function Navbar() {
           >
             <MenuItem disabled>{user?.email}</MenuItem>
             <Divider />
+            <Box sx={{ display: { sm: "none" } }}>
+              <MenuItem
+                onClick={() => {
+                  navigate("/dashboard");
+                  handleClose();
+                }}
+              >
+                Mesajlar
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/users");
+                  handleClose();
+                }}
+              >
+                Kullanıcılar
+              </MenuItem>
+              <Divider />
+            </Box>
             <MenuItem onClick={handleLogout} sx={{ color: "error.main" }}>
               <LogoutIcon sx={{ mr: 1, color: "error.main" }} />
               Çıkış
